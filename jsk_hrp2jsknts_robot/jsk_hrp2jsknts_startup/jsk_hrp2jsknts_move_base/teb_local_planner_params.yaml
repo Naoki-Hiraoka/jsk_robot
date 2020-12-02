@@ -16,7 +16,7 @@ TebLocalPlannerROS:
   yaw_goal_tolerance: 0.2 ## Allowed final orientation error in radians
   free_goal_vel: true ## Remove the goal velocity constraint such that the robot can arrive at the goal with maximum speed
 
-  dt_ref: 1.1 ## Desired temporal resolution of the trajectory (the trajectory is not fixed to dt_ref since the temporal resolution is part of the optimization, but the trajectory will be resized between iterations if dt_ref +-dt_hysteresis is violated. # hrpsysは一歩おきにしか更新できないので一歩の時間と同じにしておく
+  dt_ref: 1.0 ## Desired temporal resolution of the trajectory (the trajectory is not fixed to dt_ref since the temporal resolution is part of the optimization, but the trajectory will be resized between iterations if dt_ref +-dt_hysteresis is violated. # hrpsysは一歩おきにしか更新できないので一歩の時間と同じにしておく(1.1). auto-stabilizerは(1.0)
   dt_hysteresis: 0.1 ## Hysteresis for automatic resizing depending on the current temporal resolution, usually approx. 10% of dt_ref is recommended
   min_samples: 3 ## Minimum number of samples (should be always greater than 2)
   global_plan_overwrite_orientation: true ## Overwrite orientation of local subgoals provided by the global planner (since they often provide only a 2D path)
@@ -40,7 +40,7 @@ TebLocalPlannerROS:
   obstacle_association_cutoff_factor: 5.0 ## See obstacle_association_force_inclusion_factor, but beyond a multiple of [value]*min_obstacle_dist all obstacles are ignored during optimization. Parameter obstacle_association_force_inclusion_factor is processed first.
   costmap_converter_plugin: "" ## Define plugin name in order to convert costmap cells to points/lines/polygons. Set an empty string to disable the conversion such that all cells are treated as point-obstacles. ## 障害物を見落とす恐れがあるので使用しないほうがいい
   costmap_converter_spin_thread: True ## If set to true, the costmap converter invokes its callback queue in a different thread.
-  costmap_converter_rate: 2 ## rate that defines how often the costmap_converter plugin processes the current costmap (the value should not be much higher than the costmap update rate) [in Hz]. ## control frequencyと同じにしておく. 
+  costmap_converter_rate: 2 ## rate that defines how often the costmap_converter plugin processes the current costmap (the value should not be much higher than the costmap update rate) [in Hz]. ## control frequencyと同じにしておく. defaultのhrpsys(2), auto-stabilizer(2)
 
 # Optimization
   no_inner_iterations: 5 ## Number of actual solver iterations called in each outerloop iteration. See param no_outer_iterations.
